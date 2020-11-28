@@ -1,3 +1,5 @@
-<p>post works!</p>
+<mat-progress-bar mode="indeterminate" *ngIf="!post"></mat-progress-bar>
 
-{{ postSlug }}
+<app-post-card [post]="post"></app-post-card>
+
+<a mat-button routerLink="/posts">All posts</a>

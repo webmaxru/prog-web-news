@@ -10,6 +10,12 @@ import { map, shareReplay } from 'rxjs/operators';
 })
 export class AppShellComponent {
 
+  title= "Progressive Web News"
+
+  buildTitle(customPart:string) {
+    return customPart + ' | ' + this.title 
+  }
+
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),

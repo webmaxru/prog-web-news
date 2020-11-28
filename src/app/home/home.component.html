@@ -1,1 +1,40 @@
-<p>home works!</p>
+<mat-progress-bar
+  mode="indeterminate"
+  *ngIf="!latestPosts || !featuredPost"
+></mat-progress-bar>
+
+<mat-card class="mat-typography" *ngIf="featuredPost">
+
+
+  <mat-card-title
+    ><a [routerLink]="['/posts', featuredPost.slug]">{{
+      featuredPost.title
+    }}</a></mat-card-title
+  >
+
+  <img
+    mat-card-image
+    *ngIf="featuredPost.feature_image"
+    src="{{ featuredPost.feature_image }}"
+    alt="{{ featuredPost.title }}"
+  />
+
+  <mat-card-content>
+    {{ featuredPost.custom_excerpt }}
+  </mat-card-content>
+
+  <mat-card-header>
+    <div
+      mat-card-avatar
+      [style.background-size]="'cover'"
+      [style.background-image]="
+        'url(' + featuredPost.authors[0].profile_image + ')'
+      "
+    ></div>
+    <mat-card-title>{{ featuredPost.authors[0].name }}</mat-card-title>
+    <mat-card-subtitle>{{ featuredPost.published_at | date:'fullDate' }}</mat-card-subtitle>
+  </mat-card-header>
+  
+</mat-card>
+
+<app-post-list [posts]="latestPosts" [showExcerpt]="false"></app-post-list>

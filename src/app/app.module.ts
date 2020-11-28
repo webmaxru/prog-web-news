@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -10,16 +10,22 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { HomeComponent } from './home/home.component';
 import { PostsComponent } from './posts/posts.component';
 import { PostComponent } from './post/post.component';
+import { PostListComponent } from './shared/post-list/post-list.component';
+import { PostCardComponent } from './shared/post-card/post-card.component';
 
 @NgModule({
   declarations: [
     AppShellComponent,
     HomeComponent,
     PostsComponent,
-    PostComponent
+    PostComponent,
+    PostListComponent,
+    PostCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,9 +36,13 @@ import { PostComponent } from './post/post.component';
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatCardModule,
+    MatProgressBarModule,
   ],
-  providers: [],
-  bootstrap: [AppShellComponent]
+  providers: [
+    Title
+  ],
+  bootstrap: [AppShellComponent],
 })
-export class AppModule { }
+export class AppModule {}

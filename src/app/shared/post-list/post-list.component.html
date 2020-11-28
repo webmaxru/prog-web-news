@@ -1,0 +1,14 @@
+<mat-list *ngIf="posts">
+    <mat-list-item *ngFor="let post of posts">
+      <img matListAvatar src="{{ post.authors[0].profile_image }}" alt="{{ post.authors[0].name }}" />
+      <h3 matLine>
+        <a [routerLink]="['/posts', post.slug]">{{ post.title }}</a>
+      </h3>
+      <p matLine *ngIf="showExcerpt && post.custom_excerpt">
+        <span>{{ post.custom_excerpt }}</span>
+      </p>
+      <p matLine>
+        <small>{{ post.published_at | date:'fullDate' }}</small>
+      </p>
+    </mat-list-item>
+  </mat-list>

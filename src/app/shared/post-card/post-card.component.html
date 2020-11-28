@@ -1,0 +1,22 @@
+<mat-card class="mat-typography" *ngIf="post">
+  <mat-card-header>
+    <div
+      mat-card-avatar
+      [style.background-size]="'cover'"
+      [style.background-image]="'url(' + post.authors[0].profile_image + ')'"
+    ></div>
+    <mat-card-title>{{ post.authors[0].name }}</mat-card-title>
+    <mat-card-subtitle>{{ post.published_at | date:'fullDate' }}</mat-card-subtitle>
+  </mat-card-header>
+  <img
+    mat-card-image
+    *ngIf="post.feature_image"
+    src="{{ post.feature_image }}"
+    alt="{{ post.title }}"
+  />
+
+  <mat-card-title>{{ post.title }}</mat-card-title>
+  <mat-card-content>
+    <div [innerHTML]="post.html"></div>
+  </mat-card-content>
+</mat-card>
