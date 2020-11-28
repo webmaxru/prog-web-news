@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { GhostService } from '../ghost.service';
 import { Title } from '@angular/platform-browser';
-import { AppShellComponent } from '../app-shell/app-shell.component';
+import { SettingsService } from '../settings.service';
 
 @Component({
   selector: 'app-post',
@@ -18,7 +18,7 @@ export class PostComponent implements OnInit {
     private router: Router,
     private ghostService: GhostService,
     private titleService: Title,
-    private appShellComponent: AppShellComponent
+    private settingsService: SettingsService
   ) {
     this.postSlug = '';
   }
@@ -31,7 +31,7 @@ export class PostComponent implements OnInit {
       .then((post) => {
         this.post = post;
         this.titleService.setTitle(
-          this.appShellComponent.buildTitle(post.title)
+          this.settingsService.buildAppTitle(post.title)
         );
       })
       .catch((err) => {

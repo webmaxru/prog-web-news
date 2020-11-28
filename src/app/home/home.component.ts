@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GhostService } from '../ghost.service';
 import { Title } from '@angular/platform-browser';
-import { AppShellComponent } from '../app-shell/app-shell.component';
+import { SettingsService } from '../settings.service';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
   latestPosts;
   featuredPost;
 
-  constructor(private ghostService: GhostService, private titleService: Title, private appShellComponent: AppShellComponent) {}
+  constructor(private ghostService: GhostService, private titleService: Title, private settingsService: SettingsService) {}
 
   ngOnInit(): void {
     this.ghostService.ghostConnection.posts
@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
       })
       .then((posts) => {
         this.featuredPost = posts[0];
-        this.titleService.setTitle(this.appShellComponent.buildTitle(posts[0].title));
+        this.titleService.setTitle(this.settingsService.buildAppTitle(posts[0].title));
       })
       .catch((err: any) => {
         console.error(err);

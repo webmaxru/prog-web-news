@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GhostService } from '../ghost.service';
 import { Title } from '@angular/platform-browser';
-import { AppShellComponent } from '../app-shell/app-shell.component';
+import { SettingsService } from '../settings.service';
 
 @Component({
   selector: 'app-posts',
@@ -14,11 +14,11 @@ export class PostsComponent implements OnInit {
   constructor(
     private ghostService: GhostService,
     private titleService: Title,
-    private appShellComponent: AppShellComponent
+    private settingsService: SettingsService
   ) {}
 
   ngOnInit(): void {
-    this.titleService.setTitle(this.appShellComponent.buildTitle('All posts'));
+    this.titleService.setTitle(this.settingsService.buildAppTitle('All posts'));
 
     this.ghostService.ghostConnection.posts
       .browse({

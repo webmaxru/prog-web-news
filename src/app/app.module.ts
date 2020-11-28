@@ -17,6 +17,7 @@ import { PostsComponent } from './posts/posts.component';
 import { PostComponent } from './post/post.component';
 import { PostListComponent } from './shared/post-list/post-list.component';
 import { PostCardComponent } from './shared/post-card/post-card.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { PostCardComponent } from './shared/post-card/post-card.component';
     PostComponent,
     PostListComponent,
     PostCardComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,
