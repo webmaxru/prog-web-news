@@ -5,7 +5,9 @@ let workboxConfig = {
   globPatterns: ["favicon.ico", "index.html", "*.css", "*.js", "assets/**/*", "offline/**/*"],
   globIgnores: [
     // Skip ES5 bundles for Angular
-    `**/*-es5.*.js`,
+    "**/*-es5.*.js",
+    // Config file for Azure Static Web Apps
+    "assets/routes.json"
   ],
 
   swSrc: "src/service-worker.js",

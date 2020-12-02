@@ -85,6 +85,7 @@ offlineFallback({
   fontFallback: false,
 });
 
+
 // ALL OTHER EVENTS
 
 // Receive push and show a notification
