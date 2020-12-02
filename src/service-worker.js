@@ -4,7 +4,7 @@ import {
   createHandlerBoundToURL,
 } from "workbox-precaching";
 import { setCacheNameDetails } from "workbox-core";
-import { clientsClaim } from "workbox-core/clientsClaim.mjs";
+import { clientsClaim } from "workbox-core";
 import { NavigationRoute, registerRoute } from "workbox-routing";
 import { googleFontsCache, imageCache, offlineFallback } from "workbox-recipes";
 import {
@@ -12,6 +12,8 @@ import {
   NetworkFirst,
   StaleWhileRevalidate,
 } from "workbox-strategies";
+import { ExpirationPlugin } from "workbox-expiration";
+import { BroadcastUpdatePlugin } from "workbox-broadcast-update";
 
 // SETTINGS
 
@@ -47,10 +49,12 @@ googleFontsCache({ cachePrefix: "wb6-gfonts" });
 
 // API ROUTING
 
-// Load details immediately
+// Load details immediately and check and inform about update right after
 registerRoute(
   new RegExp("https://progwebnews-app.azurewebsites.net.*content/posts/slug.*"),
-  new StaleWhileRevalidate()
+  new StaleWhileRevalidate({
+    plugins: [new BroadcastUpdatePlugin()],
+  })
 );
 
 // Keeping lists always fresh
@@ -62,7 +66,16 @@ registerRoute(
 // Gravatars can live in cache
 registerRoute(
   new RegExp("https://www.gravatar.com/avatar/.*"),
-  new CacheFirst()
+  new CacheFirst({
+    plugins: [
+      new ExpirationPlugin({
+        // Only cache requests for a week
+        maxAgeSeconds: 7 * 24 * 60 * 60,
+        // Only cache 10 requests.
+        maxEntries: 10,
+      }),
+    ],
+  })
 );
 
 // CONTENT
@@ -84,7 +97,6 @@ offlineFallback({
   imageFallback: "offline/offline.png",
   fontFallback: false,
 });
-
 
 // ALL OTHER EVENTS
 
