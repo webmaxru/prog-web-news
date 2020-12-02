@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { HomeComponent } from './home/home.component';
 import { PostsComponent } from './posts/posts.component';
 import { PostComponent } from './post/post.component';
@@ -41,6 +42,7 @@ import { AboutComponent } from './about/about.component';
     MatListModule,
     MatCardModule,
     MatProgressBarModule,
+    MatSnackBarModule,
   ],
   providers: [
     Title

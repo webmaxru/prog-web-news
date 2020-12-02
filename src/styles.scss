@@ -2,3 +2,11 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+a {
+    color:#673ab7;
+  }
+
+a:hover, a:active   {
+    color:rgba(103,58,183,0.5);
+}

@@ -1,8 +1,12 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="(isHandset$ | async) === false">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false"
+  >
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item routerLink="/">Home</a>
@@ -11,19 +15,58 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-      <span>{{title}}</span>
-    </mat-toolbar>
-    
-    <router-outlet></router-outlet>
+    <div class="page-wrap">
+      <header role="banner">
+        <mat-toolbar color="primary">
+          <button
+            type="button"
+            aria-label="Toggle sidenav"
+            mat-icon-button
+            (click)="drawer.toggle()"
+            *ngIf="isHandset$ | async"
+          >
+            <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+          </button>
+          <span>{{ title }}</span>
+        </mat-toolbar>
+      </header>
+      <main class="content">
+        <router-outlet></router-outlet>
+      </main>
 
+      <footer class="footer">
+        <div class="footer-list">
+          <div class="footer-logo">
+            <div class="footer-logo">
+              <img
+                class="logo"
+                src="./assets/img/pwa-logo.png"
+                alt="PWA"
+              />
+              <span><a href="https://workboxjs.org">Powered by Workbox</a></span>
+            </div>
+          </div>
+
+          <div class="footer-links">
+            <span class="links"><a href="https://github.com/webmaxru/prog-web-news">
+              GitHub Repo
+            </a></span>
+            <span class="links"><a href="https://slides.com/webmax/angular-workbox-offline/">
+              Slides
+            </a></span>
+          </div>
+
+          <div class="footer-copyright">
+            <div>
+              <span>Demo by Maxim Salnikov</span>
+              <a
+                href="https://twitter.com/webmaxru"
+                >Twitter: @webmaxru</a
+              >
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
