@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "dist/prog-web-news",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
