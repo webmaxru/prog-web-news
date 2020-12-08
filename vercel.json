@@ -2,7 +2,7 @@
   "version": 2,
   "routes": [
     { "handle": "filesystem" },
-    { "src": "/.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|ttf|map|json)$)([^.]+$)", "dest": "/index.html" }
+    { "src": "/.(?!(css|gif|ico|jpg|js|png|txt|svg|woff|ttf|map|json)$)([^.]+$)", "dest": "/index.html" },
     { "src": "/(.*)", "status": 404, "dest": "/404.html" }
   ]
 }
