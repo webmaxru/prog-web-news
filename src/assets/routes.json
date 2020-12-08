@@ -9,7 +9,7 @@
   "platformErrorOverrides": [
     {
       "errorType": "NotFound",
-      "serve": "/404.html"
+      "serve": "/404error.html"
     }
   ]
 }
