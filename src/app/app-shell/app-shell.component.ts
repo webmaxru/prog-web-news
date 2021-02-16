@@ -59,13 +59,13 @@ export class AppShellComponent {
       // service worker has installed but is waiting to activate.
       wb.addEventListener('waiting', showSkipWaitingPrompt);
 
-/*       wb.register()
+      wb.register()
         .then((reg) => {
           console.log('Successful service worker registration', reg);
         })
         .catch((err) =>
           console.error('Service worker registration failed', err)
-        ); */
+        );
 
     } else {
       console.error('Service Worker API is not supported in current browser');
