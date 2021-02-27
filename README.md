@@ -1,6 +1,8 @@
-# ProgWebNews
+# Progressive web news
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.2.
+A demo application for ["Automating a service worker with Workbox 6"](https://slides.com/webmax/workbox-6-ru) (RU) tech talk
+
+[Demo hosted on Azure Static Web Apps](https://black-beach-0a05a8c1e.azurestaticapps.net/)
 
 ## Development server
 
