@@ -9,6 +9,7 @@ import {
 import { ExpirationPlugin } from "workbox-expiration";
 import { CacheableResponsePlugin } from "workbox-cacheable-response";
 import { googleFontsCache, imageCache } from "workbox-recipes";
+import { BackgroundSyncPlugin } from "workbox-background-sync";
 
 // SETTINGS
 
@@ -84,3 +85,20 @@ addEventListener("message", (event) => {
     self.skipWaiting();
   }
 });
+
+// BACKGROUND SYNC
+
+// Instantiating and configuring plugin
+const bgSyncPlugin = new BackgroundSyncPlugin("feedbackQueue", {
+  maxRetentionTime: 24 * 60, // Retry for max of 24 Hours (specified in minutes)
+});
+
+// Registering a route for retries
+registerRoute(
+  // Alternative notation: ({url}) => url.pathname.startsWith('/post-tweet'),
+  /(http[s]?:\/\/)?([^\/\s]+\/)post-tweet/,
+  new NetworkFirst({
+    plugins: [bgSyncPlugin],
+  }),
+  "POST"
+);
