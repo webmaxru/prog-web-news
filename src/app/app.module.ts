@@ -1,5 +1,7 @@
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,12 +15,21 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
 import { HomeComponent } from './home/home.component';
 import { PostsComponent } from './posts/posts.component';
 import { PostComponent } from './post/post.component';
 import { PostListComponent } from './shared/post-list/post-list.component';
 import { PostCardComponent } from './shared/post-card/post-card.component';
 import { AboutComponent } from './about/about.component';
+
+import { CachedRouteComponent } from './cached-route/cached-route.component';
+import { NonCachedRouteComponent } from './non-cached-route/non-cached-route.component';
+import { PostTweetComponent } from './post-tweet/post-tweet.component';
+import { PushSubscriptionComponent } from './push-subscription/push-subscription.component';
+
 
 @NgModule({
   declarations: [
@@ -29,6 +40,10 @@ import { AboutComponent } from './about/about.component';
     PostListComponent,
     PostCardComponent,
     AboutComponent,
+    CachedRouteComponent,
+    NonCachedRouteComponent,
+    PostTweetComponent,
+    PushSubscriptionComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,6 +58,10 @@ import { AboutComponent } from './about/about.component';
     MatCardModule,
     MatProgressBarModule,
     MatSnackBarModule,
+    MatInputModule,
+    MatFormFieldModule,
+    FormsModule,
+    HttpClientModule,
   ],
   providers: [
     Title
