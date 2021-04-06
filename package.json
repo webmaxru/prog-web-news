@@ -4,12 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "npm run build-pwa",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "build-sw": "node workbox-inject.js && npx rollup -c",
-    "build-pwa": "ng build --prod && npm run build-sw"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
