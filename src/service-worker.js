@@ -16,7 +16,7 @@ import { googleFontsCache, imageCache } from "workbox-recipes";
 clientsClaim();
 
 // Use to update the app after user triggered refresh
-self.skipWaiting();
+//self.skipWaiting();
 
 // Setting custom cache names
 setCacheNameDetails({ precache: "wb6-precache", runtime: "wb6-runtime" });
@@ -76,3 +76,11 @@ googleFontsCache({ cachePrefix: "wb6-gfonts" });
 // CONTENT
 
 imageCache({ cacheName: "wb6-content-images", maxEntries: 10 });
+
+// APP SHELL UPDATE FLOW
+
+addEventListener("message", (event) => {
+  if (event.data && event.data.type === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
+});

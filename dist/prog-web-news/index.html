@@ -13,38 +13,46 @@
   <app-shell></app-shell>
 <script src="runtime.359d5ee4682f20e936e9.js" defer=""></script><script src="polyfills.25b2e0ae5a439ecc1193.js" defer=""></script><script src="main.34827f39578469476a05.js" defer=""></script>
 
-<script>
+<script type="module">
+import {Workbox} from 'https://storage.googleapis.com/workbox-cdn/releases/6.1.2/workbox-window.prod.mjs';
 
 // Feature detection
 if ('serviceWorker' in navigator) {
 
-  // Postponing service worker installation until all core resources were loaded
-  window.addEventListener('load', () => {
+  const wb = new Workbox('/sw.js');
 
-    navigator.serviceWorker.register('/sw.js')
-      .then((registration) => {
-
-        console.log('[App] Service worker registration succeeded:', registration);
-
-        // If updatefound is fired, it means that there's a new service worker being installed.
-        registration.addEventListener('updatefound', () => {
-          
-          var installingWorker = registration.installing;
-          console.log('[App] A new service worker is being installed:', installingWorker);
-
-        });
-      })
-      .catch((error) => {
-        console.log('[App] Service worker registration failed:', error);
+  // Add an event listener to detect when the registered
+  // service worker has installed but is waiting to activate.
+  wb.addEventListener('waiting', () => {
+    // Displaying prompt
+    if (confirm(`New content is available!. Click OK to refresh`)) {
+      
+      // Assuming the user accepted the update, set up a listener
+      // that will reload the page as soon as the previously waiting
+      // service worker has taken control.
+      wb.addEventListener('controlling', () => {
+        window.location.reload();
       });
 
+      // This will postMessage() to the waiting service worker.
+      wb.messageSkipWaiting();
+    }
   });
+
+  wb.register()
+    .then((reg) => {
+      console.log('Successful service worker registration', reg);
+    })
+    .catch((err) =>
+      console.error('Service worker registration failed', err)
+    );
+
 } else {
   console.log('[App] Service workers are not supported.');
 }
 </script>
 
-<div style="position: absolute; top: 23px; right: 16px; z-index: 1; color: #fff">v1</div>
+<div style="position: absolute; top: 23px; right: 16px; z-index: 1; color: #fff">v2</div>
 
 </body>
 </html>
