@@ -21,7 +21,7 @@ if ('serviceWorker' in navigator) {
   // Postponing service worker installation until all core resources were loaded
   window.addEventListener('load', () => {
 
-    navigator.serviceWorker.register('/service-worker.js')
+    navigator.serviceWorker.register('/sw.js')
       .then((registration) => {
 
         console.log('[App] Service worker registration succeeded:', registration);
