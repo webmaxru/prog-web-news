@@ -8,6 +8,7 @@ import {
 } from "workbox-strategies";
 import { ExpirationPlugin } from "workbox-expiration";
 import { CacheableResponsePlugin } from "workbox-cacheable-response";
+import { googleFontsCache, imageCache } from "workbox-recipes";
 
 // SETTINGS
 
@@ -67,3 +68,11 @@ registerRoute(
     ],
   })
 );
+
+// STATIC RESOURCES
+
+googleFontsCache({ cachePrefix: "wb6-gfonts" });
+
+// CONTENT
+
+imageCache({ cacheName: "wb6-content-images", maxEntries: 10 });
