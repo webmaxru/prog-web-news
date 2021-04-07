@@ -1,5 +1,7 @@
 # Progressive web news
 
+**Did you came here from PWA Workshop? Follow [this repo](https://github.com/webmaxru/pwa-workshop-docs/) to get started.**
+
 A demo application for ["Automating a service worker with Workbox 6"](https://slides.com/webmax/workbox-6-ru) (RU) tech talk
 
 [Demo hosted on Azure Static Web Apps](https://black-beach-0a05a8c1e.azurestaticapps.net/)
