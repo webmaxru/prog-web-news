@@ -1,18 +1,15 @@
-import {
-  precacheAndRoute,
-  cleanupOutdatedCaches,
-  createHandlerBoundToURL,
-} from "workbox-precaching";
-import { setCacheNameDetails } from "workbox-core";
-import { clientsClaim } from "workbox-core";
+import { precacheAndRoute, createHandlerBoundToURL } from "workbox-precaching";
 import { NavigationRoute, registerRoute } from "workbox-routing";
-import { googleFontsCache, imageCache, offlineFallback } from "workbox-recipes";
+import { setCacheNameDetails, clientsClaim } from "workbox-core";
 import {
   CacheFirst,
   NetworkFirst,
   StaleWhileRevalidate,
 } from "workbox-strategies";
 import { ExpirationPlugin } from "workbox-expiration";
+import { CacheableResponsePlugin } from "workbox-cacheable-response";
+import { googleFontsCache, imageCache } from "workbox-recipes";
+import { BackgroundSyncPlugin } from "workbox-background-sync";
 import { BroadcastUpdatePlugin } from "workbox-broadcast-update";
 
 // SETTINGS
@@ -20,19 +17,16 @@ import { BroadcastUpdatePlugin } from "workbox-broadcast-update";
 // Claiming control to start runtime caching asap
 clientsClaim();
 
-// Use to update the app after user triggered refresh (without prompt)
+// Use to update the app after user triggered refresh
 //self.skipWaiting();
+
+// Setting custom cache names
+setCacheNameDetails({ precache: "wb6-precache", runtime: "wb6-runtime" });
 
 // PRECACHING
 
-// Setting custom cache name
-setCacheNameDetails({ precache: "wb6-precache", runtime: "wb6-runtime" });
-
-// We inject manifest here using "workbox-build" in workbox-inject.js
+// Precache and serve resources from __WB_MANIFEST array
 precacheAndRoute(self.__WB_MANIFEST);
-
-// Remove cache from the previous WB versions
-cleanupOutdatedCaches();
 
 // NAVIGATION ROUTING
 
@@ -43,17 +37,20 @@ const navigationRoute = new NavigationRoute(navHandler, {
 });
 registerRoute(navigationRoute);
 
-// STATIC RESOURCES
+// RUNTIME CACHING
 
-googleFontsCache({ cachePrefix: "wb6-gfonts" });
-
-// API ROUTING
-
-// Load details immediately and check and inform about update right after
+// Load details immediately and check for update right after
 registerRoute(
   new RegExp("https://progwebnews-app.azurewebsites.net.*content/posts/slug.*"),
   new StaleWhileRevalidate({
-    plugins: [new BroadcastUpdatePlugin()],
+    cacheName: "wb6-post",
+    plugins: [
+      new ExpirationPlugin({
+        // Only cache requests for a week
+        maxAgeSeconds: 7 * 24 * 60 * 60,
+      }),
+      new BroadcastUpdatePlugin(),
+    ],
   })
 );
 
@@ -63,20 +60,21 @@ registerRoute(
   new NetworkFirst()
 );
 
-// Gravatars can live in cache
+// Avatars can live in cache
 registerRoute(
-  new RegExp("https://www.gravatar.com/avatar/.*"),
+  ({ url }) => url.hostname.includes("gravatar.com"),
   new CacheFirst({
     plugins: [
-      new ExpirationPlugin({
-        // Only cache requests for a week
-        maxAgeSeconds: 7 * 24 * 60 * 60,
-        // Only cache 10 requests.
-        maxEntries: 10,
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
       }),
     ],
   })
 );
+
+// STATIC RESOURCES
+
+googleFontsCache({ cachePrefix: "wb6-gfonts" });
 
 // CONTENT
 
@@ -90,13 +88,22 @@ addEventListener("message", (event) => {
   }
 });
 
-// FALLBACK
+// BACKGROUND SYNC
 
-offlineFallback({
-  pageFallback: "offline/offline.html",
-  imageFallback: "offline/offline.png",
-  fontFallback: false,
+// Instantiating and configuring plugin
+const bgSyncPlugin = new BackgroundSyncPlugin("feedbackQueue", {
+  maxRetentionTime: 24 * 60, // Retry for max of 24 Hours (specified in minutes)
 });
+
+// Registering a route for retries
+registerRoute(
+  // Alternative notation: ({url}) => url.pathname.startsWith('/post-tweet'),
+  /(http[s]?:\/\/)?([^\/\s]+\/)post-tweet/,
+  new NetworkFirst({
+    plugins: [bgSyncPlugin],
+  }),
+  "POST"
+);
 
 // ALL OTHER EVENTS
 
@@ -107,14 +114,55 @@ self.addEventListener("push", function (event) {
   var notificationData = {};
 
   if (event.data.json()) {
-    notificationData = event.data.json();
+    notificationData = event.data.json().notification;
   } else {
     notificationData = {
       title: "Something Has Happened",
       message: "Something you might want to check out",
-      icon: "/assets/img/pwa-logo.png",
+      icon: "/assets/images/logo.png",
     };
   }
 
   self.registration.showNotification(notificationData.title, notificationData);
+});
+
+// Custom notification actions
+self.addEventListener("notificationclick", function (event) {
+  console.log("[Service Worker]: Received notificationclick event");
+
+  event.notification.close();
+
+  if (event.action == "opentweet") {
+    console.log("[Service Worker]: Performing action opentweet");
+
+    event.waitUntil(
+      clients.openWindow(event.notification.data).then(function (windowClient) {
+        // do something with the windowClient.
+      })
+    );
+  } else {
+    console.log("[Service Worker]: Performing default click action");
+
+    // This looks to see if the current is already open and
+    // focuses if it is
+    event.waitUntil(
+      clients
+        .matchAll({
+          includeUncontrolled: true,
+          type: "window",
+        })
+        .then(function (clientList) {
+          for (var i = 0; i < clientList.length; i++) {
+            var client = clientList[i];
+            if (client.url == "/" && "focus" in client) return client.focus();
+          }
+          if (clients.openWindow) return clients.openWindow("/");
+        })
+    );
+  }
+});
+
+// Closing notification action
+self.addEventListener("notificationclose", function (event) {
+  log("[Service Worker]: Received notificationclose event");
 });

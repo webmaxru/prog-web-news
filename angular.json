@@ -31,7 +31,8 @@
               "src/assets",
               "src/out-of-spa",
               "src/404error.html",
-              "src/404.html"
+              "src/404.html",
+              "src/offline"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",

@@ -7,7 +7,6 @@ let workboxConfig = {
     // Skip ES5 bundles for Angular
     "**/*-es5.*.js",
     // Config file for Azure Static Web Apps
-    "assets/routes.json",
     "assets/staticwebapps.config.json",
   ],
 

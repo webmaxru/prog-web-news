@@ -54,22 +54,23 @@
             "statusCode": 301
         }
     ],
+    "navigationFallback": {
+      "rewrite": "index.html",
+      "exclude": ["/assets/*"]
+    },
     "responseOverrides": {
         "400" : {
-            "rewrite": "/invalid-invitation-error.html",
-            "statusCode": 200
-        },
-        "404": {
-            "rewrite": "/index.html",
-            "statusCode": 200
+            "rewrite": "/invalid-invitation-error.html"
         },
         "401": {
-            "statusCode": 302,
-            "redirect": "/login"
+            "redirect": "/login",
+            "statusCode": 302
         },
         "403": {
-            "rewrite": "/custom-forbidden-page.html",
-            "statusCode": 200
+            "rewrite": "/custom-forbidden-page.html"
+        },
+        "404": {
+            "rewrite": "/404.html"
         }
     },
     "globalHeaders": {
