@@ -14,20 +14,20 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "~12.0.2",
-    "@angular/cdk": "^11.0.1",
+    "@angular/cdk": "^12.0.2",
     "@angular/common": "~12.0.2",
     "@angular/compiler": "~12.0.2",
     "@angular/core": "~12.0.2",
     "@angular/forms": "~12.0.2",
-    "@angular/material": "^11.0.1",
+    "@angular/material": "^12.0.2",
     "@angular/platform-browser": "~12.0.2",
     "@angular/platform-browser-dynamic": "~12.0.2",
     "@angular/router": "~12.0.2",
     "@tryghost/content-api": "^1.4.10",
     "rxjs": "~6.6.0",
-    "tslib": "^2.0.0",
-    "zone.js": "~0.11.4",
-    "workbox-build": "^6.1.2"
+    "tslib": "^2.2.0",
+    "workbox-build": "^6.1.2",
+    "zone.js": "~0.11.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~12.0.2",
