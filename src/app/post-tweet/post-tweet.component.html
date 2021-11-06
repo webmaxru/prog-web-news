@@ -10,7 +10,7 @@
 
       <mat-form-field style="width: 300px;">
         <input matInput placeholder="Your feedback" value="" type="text" required ngModel #messageRef="ngModel" name="message">
-        <div *ngIf="messageRef.errors?.required && messageRef.touched" class="error">
+        <div *ngIf="messageRef.errors?.['required'] && messageRef.touched" class="error">
           Message is required
         </div>
       </mat-form-field>
