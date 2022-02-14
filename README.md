@@ -2,9 +2,11 @@
 
 **Did you came here from PWA Workshop? Follow [this repo](https://github.com/webmaxru/pwa-workshop-docs/) to get started.**
 
-A demo application for ["Automating a service worker with Workbox 6"](https://slides.com/webmax/workbox-6-ru) (RU) tech talk
+Supporting resources:
 
-[Demo hosted on Azure Static Web Apps](https://black-beach-0a05a8c1e.azurestaticapps.net/)
+- ["Automating a service worker with Workbox 6" Tech talk video](https://www.youtube.com/watch?v=iN-vzuVV_6E&list=PLmXhAjRjRcwKLhoDrGEeI-t67Wg6_0eD8&index=5)
+- Slides in [English](https://slides.com/webmax/workbox-6-2022) and [Russian](https://slides.com/webmax/workbox-6-ru)
+- [Demo hosted on Azure Static Web Apps](https://black-beach-0a05a8c1e.azurestaticapps.net/)
 
 Testing offline:
 
